@@ -1,13 +1,31 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import heroImg from './assets/hero.png'
-import './App.css'
+import useProduct from "./hook/useProduct";
+import Card from "./components/Card";
 
 function App() {
-  <>
-  "HOLAAAAAAAAAAAA "
-  </>
+  const { producto, filtro, setFiltro } = useProduct();
+
+  return (
+    <>
+      <h1>Productos</h1>
+
+      <input
+        type="text"
+        placeholder="Buscar producto"
+        value={filtro}
+        onChange={(e) => setFiltro(e.target.value)}
+      />
+
+      {producto.map((p) => (
+        <Card
+          key={p.id}
+          title={p.title}
+          image={p.images[0]}
+          price={p.price}
+          description={p.description}
+        />
+      ))}
+    </>
+  );
 }
 
-export default App
+export default App;
