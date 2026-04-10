@@ -2,7 +2,13 @@ import useProduct from "./hook/useProduct";
 import Card from "./components/Card";
 
 function App() {
-  const { producto, filtro, setFiltro } = useProduct();
+  const {
+    producto,
+    filtro,
+    setFiltro,
+    categorias,
+    setCategoria
+  } = useProduct();
 
   return (
     <>
@@ -15,13 +21,21 @@ function App() {
         onChange={(e) => setFiltro(e.target.value)}
       />
 
+      <div>
+        {categorias.map((c, index) => (
+          <button key={index} onClick={() => setCategoria(c)}>
+            {c}
+          </button>
+        ))}
+      </div>
+
       {producto.map((p) => (
         <Card
           key={p.id}
           title={p.title}
-          image={p.images[0]}
           price={p.price}
           description={p.description}
+          image={p.images[0]}
         />
       ))}
     </>

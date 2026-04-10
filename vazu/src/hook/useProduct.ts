@@ -4,13 +4,18 @@ interface FakeApi {
   id: number;
   title: string;
   price: number;
-  images : string[];
   description: string;
+  images: string[];
+  category: {
+    id: number;
+    name: string;
+  };
 }
 
 const useProduct = () => {
   const [producto, setProduct] = useState<FakeApi[]>([]);
   const [filtro, setFiltro] = useState("");
+  const [categoria, setCategoria] = useState("Todas");
 
   const traerInfo = async () => {
     try {
@@ -20,9 +25,13 @@ const useProduct = () => {
       const lista: FakeApi[] = datos.map((p: FakeApi) => ({
         id: p.id,
         title: p.title,
-        images: p.images,
         price: p.price,
         description: p.description,
+        images: p.images,
+        category: {
+          id: p.category.id,
+          name: p.category.name,
+        },
       }));
 
       setProduct(lista);
@@ -35,14 +44,21 @@ const useProduct = () => {
     traerInfo();
   }, []);
 
+  const categorias = ["Todas", ...new Set(producto.map((p) => p.category.name))];
+
   const productFiltrado = producto.filter((p) =>
     p.title.toLowerCase().includes(filtro.toLowerCase())
+  ).filter((p) =>
+    categoria === "Todas" ? true : p.category.name === categoria
   );
 
   return {
     producto: productFiltrado,
     filtro,
     setFiltro,
+    categorias,
+    categoria,
+    setCategoria,
   };
 };
 
