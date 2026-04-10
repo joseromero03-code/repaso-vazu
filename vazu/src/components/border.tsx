@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useCallback} from 'react';
 import type {CSSProperties, ReactNode} from 'react';
-import './ElectricBorder.css';
+import './card.css';
 
 interface ElectricBorderProps {
   children?: ReactNode;
